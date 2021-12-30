@@ -34,9 +34,12 @@ public class MenuScript : MonoBehaviour
         if (clientSocket == null) return;
         if (!string.IsNullOrEmpty(clientSocket.recievedMessage))
         {
+            Debug.Log("We recieved some msg from server");
             //statusText.text = recievedMessage;
             clientSocket.lastRecievedMessage = clientSocket.recievedMessage;
+            statusText.text = statusText.text + clientSocket.lastRecievedMessage;
             clientSocket.recievedMessage = "";
+            //clientSocket.close();
         }
     }
 
@@ -46,8 +49,8 @@ public class MenuScript : MonoBehaviour
         Debug.Log(inputFieldServerIP.text);
         Debug.Log(inputFieldServerPort.text);
 
-        ipAddress = inputFieldServerIP.text;
-        port = int.Parse(inputFieldServerPort.text);
+        //ipAddress = inputFieldServerIP.text;
+        //port = int.Parse(inputFieldServerPort.text);
         
 
         if (clientSocket == null)
@@ -57,6 +60,7 @@ public class MenuScript : MonoBehaviour
             statusText.text = "clientSocket null ";
             if (clientSocket.isConnected)
             {
+                statusText.text = "Connected";
                 clientSocket.GetQuote("QUOTE");
             }
             else {
@@ -78,8 +82,8 @@ public class MenuScript : MonoBehaviour
 
     public void StartServer()
     {
-        ipAddress = inputFieldServerIP.text;
-        port = int.Parse(inputFieldServerPort.text);
+        //ipAddress = inputFieldServerIP.text;
+        //port = int.Parse(inputFieldServerPort.text);
 
 
         //statusText.text = "hello server";

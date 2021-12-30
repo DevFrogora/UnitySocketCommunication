@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Text;
 using System;
+using System.Net;
 
 public class ClientSocket 
 {
@@ -28,8 +29,12 @@ public class ClientSocket
         thisobject = this;
         try
         {
+            IPAddress ip = IPAddress.Parse(ipAddress);
             client = new TcpClient();
-            client.Connect(ipAddress, port);
+            client.Connect(ip, port);
+            if (client.Connected) {
+                isConnected = true;
+            }
         }
         catch (Exception e)
         {
@@ -89,6 +94,13 @@ public class ClientSocket
     {
         //statusText.text = "hello client";
         //SceneManager.LoadScene("CubeClientScene",LoadSceneMode.Single);
+    }
+
+    public void close() {
+        if (client.Connected)
+        {
+            client.Close();
+        }
     }
 
     void Message_Received(IAsyncResult res)
